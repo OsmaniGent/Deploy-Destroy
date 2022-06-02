@@ -55,6 +55,7 @@ public class BoardGame {
 	Soldier endBlackSoldier;
 	int announceWinner;
 	boolean endForSure;
+
 	public BoardGame(int frameWidth, int frameHeight) {
 		endForSure = false;
 		announceWinner = -1;
@@ -148,7 +149,7 @@ public class BoardGame {
 		if (destroyables.size() != 0) {
 			int randomnumber = (int) (Math.random()) * destroyables.size();
 			this.destroying = true;
-			this.spear.setPosition(this.destroyables.get(randomnumber).getPositionOnBoard());
+			this.spear.setPosition(this.destroyables.get(randomnumber).getPositionOnBoard(), false);
 			return true;
 		}
 		return false;
@@ -204,17 +205,16 @@ public class BoardGame {
 				} else {
 					this.endWhiteArmy.get(i).setY(this.endWhiteArmy.get(i).getY() - 1);
 				}
-				if(this.endWhiteArmy.get(i).getY() == this.frameHeight / 2 - blockWidth / 2) {
-					if(this.endWhiteSoldier == null) {
-						this.endWhiteSoldier = new Soldier(-10, true, endWhiteArmy.get(i).getNumber(), this.endWhiteArmy.get(i).getX(),
-								this.endWhiteArmy.get(i).getY(), blockWidth);
+				if (this.endWhiteArmy.get(i).getY() == this.frameHeight / 2 - blockWidth / 2) {
+					if (this.endWhiteSoldier == null) {
+						this.endWhiteSoldier = new Soldier(-10, true, endWhiteArmy.get(i).getNumber(),
+								this.endWhiteArmy.get(i).getX(), this.endWhiteArmy.get(i).getY(), blockWidth);
+					} else {
+						this.endWhiteSoldier
+								.setNumber(this.endWhiteSoldier.getNumber() + this.endWhiteArmy.get(i).getNumber());
+						this.endWhiteSoldier.setSize(this.endWhiteSoldier.getSize() + 2);
 					}
-					else {
-						this.endWhiteSoldier.setNumber(this.endWhiteSoldier.getNumber() + this.endWhiteArmy.get(i).getNumber());
-						this.endWhiteSoldier.setSize(this.endWhiteSoldier.getSize()+2);
-					}
-					
-					
+
 				}
 			}
 			if (this.endBlackArmy.get(i).getY() != this.frameHeight / 2 - blockWidth / 2) {
@@ -224,14 +224,14 @@ public class BoardGame {
 				} else {
 					this.endBlackArmy.get(i).setY(this.endWhiteArmy.get(i).getY() - 1);
 				}
-				if(this.endBlackArmy.get(i).getY() == this.frameHeight / 2 - blockWidth / 2) {
-					if(this.endBlackSoldier == null) {
-						this.endBlackSoldier = new Soldier(-10, false, endBlackArmy.get(i).getNumber(), this.endBlackArmy.get(i).getX(),
-								this.endBlackArmy.get(i).getY(), blockWidth);
-					}
-					else {
-						this.endBlackSoldier.setNumber(this.endBlackSoldier.getNumber() + this.endBlackArmy.get(i).getNumber());
-						this.endBlackSoldier.setSize(this.endBlackSoldier.getSize()+2);
+				if (this.endBlackArmy.get(i).getY() == this.frameHeight / 2 - blockWidth / 2) {
+					if (this.endBlackSoldier == null) {
+						this.endBlackSoldier = new Soldier(-10, false, endBlackArmy.get(i).getNumber(),
+								this.endBlackArmy.get(i).getX(), this.endBlackArmy.get(i).getY(), blockWidth);
+					} else {
+						this.endBlackSoldier
+								.setNumber(this.endBlackSoldier.getNumber() + this.endBlackArmy.get(i).getNumber());
+						this.endBlackSoldier.setSize(this.endBlackSoldier.getSize() + 2);
 					}
 				}
 			}
@@ -255,7 +255,7 @@ public class BoardGame {
 //				this.destroyableSoldiers();
 //			}
 //		}
-		if(announceWinner != -1)
+		if (announceWinner != -1)
 			return announceWinner;
 		if (this.animation) {
 			if (this.animations[currentAnimation].tick()) {
@@ -282,11 +282,12 @@ public class BoardGame {
 					endGame = true;
 					preEndGame();
 				} else if (this.currentAnimation > 5 && this.currentAnimation < 9) {
-					if(currentAnimation == 6)
+					if (currentAnimation == 6)
 						return 1;
-					else if(currentAnimation == 7)
+					else if (currentAnimation == 7)
 						return 2;
-					return 3;
+					else
+						return 3;
 				} else {
 					this.currentAnimation = -1;
 				}
@@ -406,9 +407,9 @@ public class BoardGame {
 					}
 				}
 			}
-			if(this.drawCarpet && this.readyToDeploy.getOwner())
+			if (this.drawCarpet && this.readyToDeploy.getOwner())
 				this.whitePlayer.hideSoldiersExcept(this.readyToDeploy);
-			else if(!this.deploying || !isWhiteTurn)
+			else if (!this.deploying || !isWhiteTurn)
 				this.whitePlayer.perfectPosition();
 		}
 		return announceWinner;
@@ -421,6 +422,11 @@ public class BoardGame {
 
 	}
 
+	public void end() {
+		this.currentAnimation = 5;
+		this.animation = true;
+	}
+	
 	public void draw(Graphics g) {
 
 		if (this.drawCarpet)
@@ -438,9 +444,12 @@ public class BoardGame {
 		} else if (!animation && this.tossCoinTime) {
 			this.coin.draw(g);
 		}
-		
+
 		if (this.destroying)
 			this.spear.draw(g);
+		else if (this.whiteDestroys && this.destroyables.size() != 0 && !this.endGame) {
+			this.highlightDestroyables(g);
+		}
 
 		if (this.endBlackSoldier != null)
 			endBlackSoldier.draw(g);
@@ -448,6 +457,37 @@ public class BoardGame {
 			endWhiteSoldier.draw(g);
 		if (this.animation)
 			this.animations[currentAnimation].draw(g);
+	}
+
+	public void highlightDestroyables(Graphics g) {
+		this.blacker = !this.blacker;
+		if(blacker)
+			colorShade++;
+		g.setColor(Color.BLACK);
+		for (int i = 0; i < this.destroyables.size(); i++) {
+			
+			g.fillPolygon(
+					new int[] { this.getBoardCellX(destroyables.get(i).getPositionOnBoard()) + blockWidth / 2,
+							this.getBoardCellX(destroyables.get(i).getPositionOnBoard()) + blockWidth / 2 - colorShade,
+							this.getBoardCellX(destroyables.get(i).getPositionOnBoard()) + blockWidth / 2
+									+ colorShade },
+					new int[] { this.frameHeight / 2 - blockHeight / 2,
+							this.frameHeight / 2 - blockHeight / 2 - colorShade,
+							this.frameHeight / 2 - blockHeight / 2 - colorShade },
+					3);
+			g.fillPolygon(
+					new int[] { this.getBoardCellX(destroyables.get(i).getPositionOnBoard()) + blockWidth / 2,
+							this.getBoardCellX(destroyables.get(i).getPositionOnBoard()) + blockWidth / 2 - colorShade,
+							this.getBoardCellX(destroyables.get(i).getPositionOnBoard()) + blockWidth / 2
+									+ colorShade },
+					new int[] { this.frameHeight / 2 + blockHeight / 2,
+							this.frameHeight / 2 + blockHeight / 2 + colorShade,
+							this.frameHeight / 2 + blockHeight / 2 + colorShade },
+					3);
+		}
+		
+		if(colorShade > blockWidth/2 || colorShade < 0)
+			colorShade = 1;
 	}
 
 	public void drawSoldiers(Graphics g) {
@@ -540,8 +580,7 @@ public class BoardGame {
 			}
 		}
 	}
-	
-	
+
 	private int randomPlace() {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
 		for (int i = 0; i < board.length; i++) {
@@ -567,7 +606,7 @@ public class BoardGame {
 								this.drawCarpet = false;
 
 								this.deploying = true;
-								if(isWhiteTurn)
+								if (isWhiteTurn)
 									this.whitePlayer.hideSoldiersFastExcept(this.readyToDeploy);
 //							this.isWhiteTurn = false;
 								playSE(1);
@@ -592,7 +631,7 @@ public class BoardGame {
 //							destroyRandom();
 //							this.turnChange();
 							this.destroying = true;
-							this.spear.setPosition(destroyables.get(i).getPositionOnBoard());
+							this.spear.setPosition(destroyables.get(i).getPositionOnBoard(), true);
 							break;
 						}
 					}
