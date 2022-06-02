@@ -313,7 +313,7 @@ public class BoardGame {
 					this.animation = true;
 					if (this.endBlackSoldier.getNumber() < this.endWhiteSoldier.getNumber())
 						this.currentAnimation = 6;
-					if (this.endBlackSoldier.getNumber() > this.endWhiteSoldier.getNumber())
+					else if (this.endBlackSoldier.getNumber() > this.endWhiteSoldier.getNumber())
 						this.currentAnimation = 7;
 					else
 						this.currentAnimation = 8;
