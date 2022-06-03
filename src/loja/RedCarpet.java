@@ -4,15 +4,16 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class RedCarpet {
-	int frameHeight;
-	int frameWidth;
-	int x;
-	int yStart;
-	int position;
-	int[] xVerts;
-	int[] yVerts;
-	int vertices;
-	int blockWidth;
+	private int frameHeight;
+	private int frameWidth;
+	private int x;
+	private int yStart;
+	private int position;
+	private int[] xVerts;
+	private int[] yVerts;
+	private int vertices;
+	private int blockWidth;
+	
 	public RedCarpet(int frameHeight, int frameWidth, int position, int blockWidth) {
 		super();
 		this.frameHeight = frameHeight;

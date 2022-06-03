@@ -5,18 +5,18 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
 public class Soldier {
-	int number;
-	int positionOnBoard;
+	private int number;
+	private int positionOnBoard;
 	
-	//1 if White, 2 if Black
-	boolean	owner;
+	//TRUE if White, FALSE if Black
+	private boolean	owner;
 	
-	int x;
-	int y;
+	private int x;
+	private int y;
 	
-	int size;
-	int normalSize;
-	boolean isHovered;
+	private int size;
+	private int normalSize;
+	private boolean isHovered;
 	
 	public Soldier(int position, boolean owner, int number, int x, int y, int size) {
 		positionOnBoard = position;

@@ -121,16 +121,16 @@ public class PlayGame extends JPanel implements Manager {
 	public static final int WIDTH = 1200, HEIGHT = 600, FPS = 60, TPS = 60;
 	public static final String GAME_NAME = "DEPLOY DESTROY";
 
-	public int gameState;
-	public final int titleState = 0;
-	public final int playState = 1;
-	public final int endState = 2;
-	public final int instructionState = 3;
+	private  int gameState;
+	public static final int titleState = 0;
+	public static final int playState = 1;
+	public static final int endState = 2;
+	public static final int instructionState = 3;
 	private int winner;
 
-	GameMenu gm;
-	BoardGame bg;
-	Thread gameThread;
+	private GameMenu gm;
+	private BoardGame bg;
+	private Thread gameThread;
 	
 
 	PlayGame() {
@@ -243,13 +243,13 @@ public class PlayGame extends JPanel implements Manager {
 			} else if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
 				gm.selectorDown();
 			} else if (code == KeyEvent.VK_ENTER) {
-				if (gm.selector == 0) {
+				if (gm.getSelector() == 0) {
 					gameState = playState;
 					bg = new BoardGame(this.WIDTH, this.HEIGHT);
-				} else if (gm.selector == 2) {
+				} else if (gm.getSelector() == 2) {
 					System.exit(1);
 				}
-				else if(gm.selector == 1) {
+				else if(gm.getSelector() == 1) {
 					gameState = instructionState;
 				}
 			}

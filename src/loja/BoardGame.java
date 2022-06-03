@@ -7,54 +7,54 @@ import loja.Soldier;
 
 public class BoardGame {
 
-	Soldier[] board;
-	int blockWidth;
-	int blockHeight;
-	int frameHeight;
-	int frameWidth;
-	Player whitePlayer;
-	Player blackPlayer;
-	Soldier readyToDeploy;
+	private Soldier[] board;
+	private int blockWidth;
+	private int blockHeight;
+	private int frameHeight;
+	private int frameWidth;
+	private Player whitePlayer;
+	private Player blackPlayer;
+	private Soldier readyToDeploy;
 
-	Coin coin;
-	boolean isWhiteTurn;
-	boolean tossCoinTime;
-	Sound sound = new Sound();
-	ArrayList<Soldier> destroyables;
+	private Coin coin;
+	private boolean whiteTurn;
+	private boolean tossCoinTime;
+	private Sound sound = new Sound();
+	private ArrayList<Soldier> destroyables;
 
-	boolean isDeploymentPhase;
-	boolean endGame;
-	Spear spear;
+	private boolean deploymentPhase;
+	private boolean endGame;
+	private Spear spear;
 
-	int coinY;
-	int coinX;
+	// int coinY;
+	// int coinX;
 
-	int colorShade = 230;
-	boolean blacker = true;
-	PhaseAnimation[] animations;
-	int currentAnimation;
-	boolean animation;
+	private int colorShade = 230;
+	private boolean blacker = true;
+	private PhaseAnimation[] animations;
+	private int currentAnimation;
+	private boolean animation;
 
-	boolean deploying;
+	private boolean deploying;
 
-	RedCarpet redCarpet;
-	boolean destroying;
+	private RedCarpet redCarpet;
+	private boolean destroying;
 
-	boolean whiteDestroys;
-	int soldierNormalX;
-	int carpetPlace;
-	boolean drawCarpet;
-	int time;
-	ArrayList<Soldier> endWhiteArmy;
-	ArrayList<Soldier> endBlackArmy;
-	int whiteSum;
-	int blackSum;
-	boolean sizeCheck;
-	boolean sumCheck;
-	Soldier endWhiteSoldier;
-	Soldier endBlackSoldier;
-	int announceWinner;
-	boolean endForSure;
+	private boolean whiteDestroys;
+	private int soldierNormalX;
+	private int carpetPlace;
+	private boolean drawCarpet;
+	private int time;
+	private ArrayList<Soldier> endWhiteArmy;
+	private ArrayList<Soldier> endBlackArmy;
+	private int whiteSum;
+	private int blackSum;
+	private boolean sizeCheck;
+	private boolean sumCheck;
+	private Soldier endWhiteSoldier;
+	private Soldier endBlackSoldier;
+	private int announceWinner;
+	private boolean endForSure;
 
 	public BoardGame(int frameWidth, int frameHeight) {
 		endForSure = false;
@@ -79,9 +79,9 @@ public class BoardGame {
 		blockHeight = blockWidth;
 		whitePlayer = new Player(true, frameWidth, frameHeight, blockWidth);
 		blackPlayer = new Player(false, frameWidth, frameHeight, blockWidth);
-		isWhiteTurn = true;
+		whiteTurn = true;
 		playMusic(0);
-		this.isDeploymentPhase = true;
+		this.deploymentPhase = true;
 		this.tossCoinTime = true;
 //		board[0] = new Soldier(0,1,4,blockWidth*3,frameHeight/2- blockHeight/2);
 		destroyables = new ArrayList<Soldier>();
@@ -114,12 +114,12 @@ public class BoardGame {
 	}
 
 	private void deploySoldierSmooth() {
-		if (isWhiteTurn) {
+		if (whiteTurn) {
 			this.readyToDeploy.setY(readyToDeploy.getY() - 10);
 
 			if (readyToDeploy.getY() < (this.frameHeight - blockHeight) / 2) {
 				whitePlayer.deployArmy(readyToDeploy.getNumber(), this.redCarpet.getPosition(), board);
-				isWhiteTurn = false;
+				whiteTurn = false;
 				deploying = false;
 				this.readyToDeploy = null;
 				if (isBoardFull()) {
@@ -133,7 +133,7 @@ public class BoardGame {
 			this.readyToDeploy.setY(readyToDeploy.getY() + 10);
 			if (readyToDeploy.getY() > (this.frameHeight - blockHeight) / 2) {
 				blackPlayer.deployArmy(readyToDeploy.getNumber(), this.redCarpet.getPosition(), board);
-				isWhiteTurn = true;
+				whiteTurn = true;
 				deploying = false;
 				readyToDeploy = null;
 				if (isBoardFull()) {
@@ -249,7 +249,7 @@ public class BoardGame {
 	}
 
 	public int tick() {
-//		if(!this.destroying && !this.whiteDestroys && !this.isDeploymentPhase) {
+//		if(!this.destroying && !this.whiteDestroys && !this.deploymentPhase) {
 //			if(!destroyRandom()) {
 //				this.whiteDestroys = true;
 //				this.destroyableSoldiers();
@@ -266,7 +266,7 @@ public class BoardGame {
 
 				} else if (currentAnimation == 2) {
 
-					this.isDeploymentPhase = false;
+					this.deploymentPhase = false;
 					this.destroyableSoldiers();
 					if (this.destroyables.size() == 0) {
 						this.whiteDestroys = !this.whiteDestroys;
@@ -352,7 +352,7 @@ public class BoardGame {
 				if (time > -1) {
 					if (deploying)
 						this.deploySoldierSmooth();
-					else if (!isWhiteTurn && this.isDeploymentPhase && !animation && !this.tossCoinTime) {
+					else if (!whiteTurn && this.deploymentPhase && !animation && !this.tossCoinTime) {
 						this.readyToDeploy = blackPlayer.deployRandomSoldier();
 						this.redCarpet.setPosition(this.randomPlace());
 						this.deploying = true;
@@ -371,7 +371,7 @@ public class BoardGame {
 
 							} else if (currentAnimation == 2) {
 
-								this.isDeploymentPhase = false;
+								this.deploymentPhase = false;
 								this.destroyableSoldiers();
 								if (this.destroyables.size() == 0) {
 									this.whiteDestroys = !this.whiteDestroys;
@@ -394,10 +394,10 @@ public class BoardGame {
 						int x = this.coin.tick();
 						if (x == 1) {
 							this.whiteDestroys = true;
-							this.isWhiteTurn = true;
+							this.whiteTurn = true;
 							this.currentAnimation = 3;
 						} else if (x == 2) {
-							this.isWhiteTurn = false;
+							this.whiteTurn = false;
 							this.currentAnimation = 4;
 						}
 						if (x != 0) {
@@ -409,7 +409,7 @@ public class BoardGame {
 			}
 			if (this.drawCarpet && this.readyToDeploy.getOwner())
 				this.whitePlayer.hideSoldiersExcept(this.readyToDeploy);
-			else if (!this.deploying || !isWhiteTurn)
+			else if (!this.deploying || !whiteTurn)
 				this.whitePlayer.perfectPosition();
 		}
 		return announceWinner;
@@ -544,7 +544,7 @@ public class BoardGame {
 		if (!deploying) {
 			if (this.tossCoinTime)
 				this.coin.mouseMoved(x, y);
-			if (this.isDeploymentPhase)
+			if (this.deploymentPhase)
 				whitePlayer.callFunction(x, y);
 			if (this.readyToDeploy != null)
 				redCarpet(x, y);
@@ -596,7 +596,7 @@ public class BoardGame {
 			if (!this.animation) {
 				if (this.tossCoinTime)
 					this.coin.mouseClicked(x, y);
-				else if (this.isDeploymentPhase) {
+				else if (this.deploymentPhase) {
 					if (readyToDeploy != null) {
 						for (int i = 0; i < this.board.length; i++) {
 							if (board[i] == null && x >= blockWidth * (i + 2) && x <= blockWidth * (i + 3)
@@ -606,14 +606,14 @@ public class BoardGame {
 								this.drawCarpet = false;
 
 								this.deploying = true;
-								if (isWhiteTurn)
+								if (whiteTurn)
 									this.whitePlayer.hideSoldiersFastExcept(this.readyToDeploy);
-//							this.isWhiteTurn = false;
+//							this.whiteTurn = false;
 								playSE(1);
 //							this.phaseChange();
-//								if (!isWhiteTurn) {
+//								if (!whiteTurn) {
 //									blackPlayer.deployRandomSoldier(board);
-//									isWhiteTurn = true;
+//									whiteTurn = true;
 //									this.phaseChange();
 //								}
 								break;
@@ -636,8 +636,8 @@ public class BoardGame {
 						}
 					}
 				}
-				if (!this.tossCoinTime && this.isDeploymentPhase) {
-					if (!this.deploying && isWhiteTurn)
+				if (!this.tossCoinTime && this.deploymentPhase) {
+					if (!this.deploying && whiteTurn)
 						readyToDeploy = whitePlayer.callAnotherFunction(x, y);
 					if (readyToDeploy != null) {
 						readyToDeploy.reset();
@@ -672,7 +672,7 @@ public class BoardGame {
 	}
 
 	public void destroyableSoldiers() {
-//			this.isWhiteTurn = false;
+//			this.whiteTurn = false;
 		destroyables.clear();
 		boolean flag = this.whiteDestroys;
 
@@ -731,13 +731,13 @@ public class BoardGame {
 
 	public void phaseChange() {
 
-		this.isDeploymentPhase = false;
+		this.deploymentPhase = false;
 		this.destroyableSoldiers();
 	}
 
 //	public void turnChange() {
-//		this.isWhiteTurn = !this.isWhiteTurn;
-//		if (!this.isDeploymentPhase)
+//		this.whiteTurn = !this.whiteTurn;
+//		if (!this.deploymentPhase)
 //			destroyableSoldiers();
 //		if (destroyables.size() == 0) {
 //			callA_VeryDifferentFunction();

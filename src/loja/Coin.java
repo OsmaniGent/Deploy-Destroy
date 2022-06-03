@@ -4,24 +4,24 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class Coin {
-	int coinX;
-	int coinY;
-	boolean rotating;
-	int speed;
-	boolean heads;
-	int frameHeight;
-	int frameWidth;
-	int coinWidth;
-	int coinHeight;
-	boolean choosing;
-	int time;
-	Color[] colors;
-	int currentColor;
-	Button rightButton;
-	Button leftButton;
-	boolean lucky;
-	boolean shrinking;
-	boolean moving;
+	private int coinX;
+	private int coinY;
+	private boolean rotating;
+	private int speed;
+	private boolean heads;
+	private int frameHeight;
+	private int frameWidth;
+	private int coinWidth;
+	private int coinHeight;
+	private boolean choosing;
+	private int time;
+	private Color[] colors;
+	private int currentColor;
+	private Button rightButton;
+	private Button leftButton;
+	private boolean lucky;
+	private boolean shrinking;
+	private boolean moving;
 
 	public Coin(int frameHeight, int frameWidth) {
 		this.speed = 20;

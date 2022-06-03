@@ -26,18 +26,18 @@ public class GameMenu extends JPanel implements Runnable {
 	
 	public static final int WIDTH = 1200, HEIGHT = 600;
 	
-	public int selector = 0;
-	public int blockWidth = WIDTH/20;
-	public int frameHeight = blockWidth;
-	public int hovering;
-	public String text1 = "Start Game";
-	public String text2 = "Instructions";
-	public String text3 = "Quit";
-	public int startWidth = getWidth();
-	public int startHeight = getHeight();
-	public boolean isHovered;
+	private int selector = 0;
+	private int blockWidth = WIDTH/20;
+	private int frameHeight = blockWidth;
+	private int hovering;
+	private String text1 = "Start Game";
+	private String text2 = "Instructions";
+	private String text3 = "Quit";
+	private int startWidth = getWidth();
+	private int startHeight = getHeight();
+	private boolean hovered;
 	private BufferedImage img; 
-
+	public static final int FPS = 60;
 	
 	
 //	JFrame frame = new JFrame();
@@ -48,7 +48,7 @@ public class GameMenu extends JPanel implements Runnable {
 //	
 
   
-  int FPS = 60;
+  
   
 //  TileManager tileM = new TileManager(this);
   
@@ -61,7 +61,7 @@ public class GameMenu extends JPanel implements Runnable {
 //  public CollisionChecker cChecker = new CollisionChecker(this);
 //  
 //  public AssetSetter aSetter = new AssetSetter(this);
-Thread gameThread;
+	Thread gameThread;
   
  
   
@@ -82,7 +82,10 @@ Thread gameThread;
    
   }
   
-  
+  public void getSelector(){
+  	return this.selector;
+  }
+
   public void startGameThread() {
     this.gameThread = new Thread(this);
     this.gameThread.start();
@@ -265,7 +268,7 @@ public void drawInstruction(Graphics g) {
 		else {
 			selector = 2;
 		}
-		isHovered = true;
+		hovered = true;
 	}
 	
 	public int getWidth(Graphics g,String text) {
@@ -314,7 +317,7 @@ public void drawInstruction(Graphics g) {
 					function(3);
 				}
 				else {
-					isHovered = false;
+					hovered = false;
 				}
 		
 		
@@ -322,7 +325,7 @@ public void drawInstruction(Graphics g) {
 	
 	public int clicked(int x, int y) {
 //		
-		if(isHovered) {
+		if(hovered) {
 	
 			return selector;
 		}

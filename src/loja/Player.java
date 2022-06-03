@@ -7,28 +7,25 @@ public class Player {
 
 	public static final int ARMY_SIZE = 8;
 
-	public ArrayList<Soldier> getArmy() {
-		return army;
-	}
 
-	ArrayList<Soldier> army;
+
+	private ArrayList<Soldier> army;
 //	int armySize;
-	int frameHeight;
-	int frameWidth;
-	int blockWidth;
-	boolean isHuman;
-	int yPos;
-	int hoveredSoldier;
-	ArrayList<Object> o = new ArrayList<Object>();
+	private int frameHeight;
+	private int frameWidth;
+	private int blockWidth;
+	private boolean human;
+	private int yPos;
+	private int hoveredSoldier;
 
-	public Player(boolean isHuman, int frameWidth, int frameHeight, int blockWidth) {
+	public Player(boolean human, int frameWidth, int frameHeight, int blockWidth) {
 		army = new ArrayList<Soldier>(ARMY_SIZE);
-		this.isHuman = isHuman;
+		this.human = human;
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.blockWidth = blockWidth;
 		this.hoveredSoldier = -1;
-		if (isHuman)
+		if (human)
 			yPos = frameHeight - frameHeight / 8;
 		else
 			yPos = frameHeight / 8 - blockWidth;
@@ -36,11 +33,15 @@ public class Player {
 
 	}
 
+	public ArrayList<Soldier> getArmy() {
+		return army;
+	}
+
 	private void fillArmy() {
 		int xStartingPos = 6 * blockWidth;
 //		int yStartingPos;
 		int soldierOwner;
-//		if(isHuman) {
+//		if(human) {
 ////			yStartingPos = frameHeight - frameHeight/8;
 //			soldierOwner = 1;
 //		}
@@ -52,10 +53,10 @@ public class Player {
 		for (int i = 0; i < this.ARMY_SIZE; i++) {
 			if (i < 4)
 				army.add(
-						new Soldier(i, isHuman, i + 1, xStartingPos + blockWidth * i - 10 * (4 - i), yPos, blockWidth));
+						new Soldier(i, human, i + 1, xStartingPos + blockWidth * i - 10 * (4 - i), yPos, blockWidth));
 			else
 				army.add(
-						new Soldier(i, isHuman, i + 1, xStartingPos + blockWidth * i + 10 * (i - 4), yPos, blockWidth));
+						new Soldier(i, human, i + 1, xStartingPos + blockWidth * i + 10 * (i - 4), yPos, blockWidth));
 		}
 
 	}

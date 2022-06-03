@@ -4,14 +4,16 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class Spear {
-	int frameHeight;
-	int frameWidth;
-	int position;
-	int x;
-	int y;
-	int width;
-	boolean toBeDestroyed;
-	boolean owner;
+	private int frameHeight;
+	private int frameWidth;
+	private int position;
+	private int x;
+	private int y;
+	private int width;
+	private boolean toBeDestroyed;
+
+	//TRUE for White, FALSE for Black
+	private boolean owner;
 
 	public Spear(int frameHeight, int frameWidth, int position, int width) {
 		this.frameHeight = frameHeight;

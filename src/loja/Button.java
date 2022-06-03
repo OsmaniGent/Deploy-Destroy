@@ -6,17 +6,17 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class Button {
-	int x;
-	int y;
-	int frameHeight;
-	int frameWidth;
-	int blockHeight;
-	int blockWidth;
-	boolean right;
-	String text;
+	private int x;
+	private int y;
+	private int frameHeight;
+	private int frameWidth;
+	private int blockHeight;
+	private int blockWidth;
+	private boolean right;
+	private String text;
 //	Color color;
-	boolean isHovered;
-	boolean clicked;
+	private boolean hovered;
+	private boolean clicked;
 	
 	public Button(int frameHeight, int frameWidth, boolean right, String text) {
 		this.frameHeight = frameHeight;
@@ -34,11 +34,11 @@ public class Button {
 			blockWidth = frameWidth/6;
 			this.x = frameWidth/4 - blockWidth/2; 
 		}
-		this.isHovered = false;
+		this.hovered = false;
 		this.clicked = false;
 	}
 	public void draw(Graphics g) {
-		if(!isHovered) {
+		if(!hovered) {
 			g.setColor(Color.BLACK);
 			g.drawRect(this.x, this.y, this.blockWidth, this.blockHeight);
 		}
@@ -56,7 +56,7 @@ public class Button {
 	private void drawText(Graphics g) {
 		int x = this.x + this.blockWidth/2;
 		int y = this.y + this.blockHeight/2;
-		if(!isHovered) {
+		if(!hovered) {
 			if(this.right)
 				g.setColor(new Color(32,191,69));
 			else
@@ -85,14 +85,14 @@ public class Button {
 	}
 	
 	public void mouseMoved(int x, int y) {
-		if(!isHovered) {
+		if(!hovered) {
 			if(x >= this.x && x <= this.x + this.blockWidth && y >= this.y && y <= this.y + blockHeight) {
-				this.isHovered = true;
+				this.hovered = true;
 			}
 		}
 		else {
 			if(x < this.x || x > this.x + this.blockWidth || y < this.y || y > this.y + blockHeight)
-				this.isHovered = false;
+				this.hovered = false;
 		}
 	}
 	

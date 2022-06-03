@@ -7,18 +7,18 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
 public class PhaseAnimation {
-	String text;
-	int frameHeight;
-	int frameWidth;
-	int textX;
+	private String text;
+	private int frameHeight;
+	private int frameWidth;
+	private int textX;
 //	int bgX;
 //	boolean bgMoving;
-	boolean textMoving;
+	private boolean textMoving;
 //	boolean qr;
-	int textWidth;
-	boolean rightAnimation;
-	int time;
-	boolean end;
+	private int textWidth;
+	private boolean rightAnimation;
+	private int time;
+	private boolean end;
 	
 	public PhaseAnimation(String text, int frameHeight, int frameWidth) {
 //		qr = false;
