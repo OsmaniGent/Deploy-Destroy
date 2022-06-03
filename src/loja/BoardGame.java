@@ -124,6 +124,7 @@ public class BoardGame {
 				this.readyToDeploy = null;
 				if (isBoardFull()) {
 					this.currentAnimation = 2;
+					this.colorShade = 3;
 					this.animation = true;
 				} else
 					time = -10;
@@ -138,6 +139,7 @@ public class BoardGame {
 				readyToDeploy = null;
 				if (isBoardFull()) {
 					this.currentAnimation = 2;
+					this.colorShade = 3;
 					this.animation = true;
 				}
 			}
