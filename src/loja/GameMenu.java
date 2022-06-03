@@ -82,7 +82,7 @@ public class GameMenu extends JPanel implements Runnable {
    
   }
   
-  public void getSelector(){
+  public int getSelector(){
   	return this.selector;
   }
 

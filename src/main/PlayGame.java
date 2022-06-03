@@ -49,14 +49,14 @@
 //
 //	@Override
 //	public void mouseMoved(MouseEvent e) {
-//		bg.callFunction(e.getX(), e.getY());
+//		bg.hover(e.getX(), e.getY());
 ////		System.out.println(e.getX());
 //		
 //	}
 //
 //	@Override
 //	public void mouseClicked(MouseEvent e) {
-//		bg.callAnotherFunction(e.getX(), e.getY());
+//		bg.click(e.getX(), e.getY());
 //		
 //	}
 //
@@ -173,6 +173,7 @@ public class PlayGame extends JPanel implements Manager {
 			this.winner = bg.tick();
 			if(winner != -1)
 				this.gameState = endState;
+			}
 		}
 				
 
@@ -185,7 +186,7 @@ public class PlayGame extends JPanel implements Manager {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		bg.callFunction(e.getX(), e.getY());
+		bg.hover(e.getX(), e.getY());
 		if (gameState == 0 || gameState == endState)
 			gm.hover(e.getX(), e.getY());
 //		System.out.println(e.getX());
@@ -194,7 +195,7 @@ public class PlayGame extends JPanel implements Manager {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		bg.callAnotherFunction(e.getX(), e.getY());
+		bg.click(e.getX(), e.getY());
 		if (gameState == 0 || gameState == endState) {
 			if (gm.clicked(e.getX(), e.getY()) == 0) {
 				gameState = playState;
