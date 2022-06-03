@@ -115,7 +115,7 @@ public class Player {
 		}
 	}
 
-	public void callFunction(int x, int y) {
+	public void hover(int x, int y) {
 		if (hoveredSoldier != -1) {
 			if (x <= this.army.get(hoveredSoldier).getX()
 					|| x >= this.army.get(hoveredSoldier).getX() + this.army.get(hoveredSoldier).getSize()
@@ -146,7 +146,7 @@ public class Player {
 		}
 	}
 
-	public Soldier callAnotherFunction(int x, int y) {
+	public Soldier click(int x, int y) {
 		for (Soldier s : this.army) {
 			if (x >= s.getX() && x <= s.getX() + s.getSize() && y >= s.getY() && y <= s.getY() + s.getSize()) {
 				return s;

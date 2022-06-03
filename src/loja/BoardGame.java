@@ -540,16 +540,16 @@ public class BoardGame {
 		}
 	}
 
-	public void callFunction(int x, int y) {
+	public void hover(int x, int y) {
 		if (!deploying) {
 			if (this.tossCoinTime)
 				this.coin.mouseMoved(x, y);
 			if (this.deploymentPhase)
-				whitePlayer.callFunction(x, y);
+				whitePlayer.hover(x, y);
 			if (this.readyToDeploy != null)
 				redCarpet(x, y);
 		}
-//		blackPlayer.callFunction(x, y);
+//		blackPlayer.hover(x, y);
 	}
 
 	public void moveSoldierXTo(int i) {
@@ -591,7 +591,7 @@ public class BoardGame {
 		return positions.get(random);
 	}
 
-	public void callAnotherFunction(int x, int y) {
+	public void click(int x, int y) {
 		if (!deploying && !destroying) {
 			if (!this.animation) {
 				if (this.tossCoinTime)
@@ -638,7 +638,7 @@ public class BoardGame {
 				}
 				if (!this.tossCoinTime && this.deploymentPhase) {
 					if (!this.deploying && whiteTurn)
-						readyToDeploy = whitePlayer.callAnotherFunction(x, y);
+						readyToDeploy = whitePlayer.click(x, y);
 					if (readyToDeploy != null) {
 						readyToDeploy.reset();
 						this.soldierNormalX = this.readyToDeploy.getX();
@@ -647,7 +647,7 @@ public class BoardGame {
 				}
 			}
 		}
-//		blackPlayer.callAnotherFunction(x, y);
+//		blackPlayer.click(x, y);
 	}
 
 	public void playMusic(int i) {
