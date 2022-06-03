@@ -127,10 +127,12 @@ public class PlayGame extends JPanel implements Manager {
 	public static final int endState = 2;
 	public static final int instructionState = 3;
 	private int winner;
+	public int num = 0;
 
 	private GameMenu gm;
 	private BoardGame bg;
 	private Thread gameThread;
+	private Sound sound;
 	
 
 	PlayGame() {
@@ -154,13 +156,22 @@ public class PlayGame extends JPanel implements Manager {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.BLACK);
 		if (gameState == titleState) {
+			bg.stopMusic();
 			gm.drawStartMenu(g, 0);
 		} 
 		else if(gameState == endState) {
+			
 			gm.drawStartMenu(g, winner);
+			gm.stopMusic();
+			bg.stopMusic();
 		}
 		else if (gameState == playState) {
+			
 			bg.draw(g);
+			if(num > 1) {
+				bg.stopMusic();
+				bg.stopMusic();
+			}
 		}else if(gameState == instructionState){
 			gm.drawInstruction(g);
 		}
@@ -171,13 +182,15 @@ public class PlayGame extends JPanel implements Manager {
 	public void tick() {
 		if (gameState == 1) {
 			this.winner = bg.tick();
-			if(winner != -1)
+			if(winner != -1) {
 				this.gameState = endState;
+				gm.playMusic(3);
+			}
+				
 			}
 		}
 				
 
-	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
@@ -199,7 +212,9 @@ public class PlayGame extends JPanel implements Manager {
 		if (gameState == 0 || gameState == endState) {
 			if (gm.clicked(e.getX(), e.getY()) == 0) {
 				gameState = playState;
+				gm.stopMusic();
 				this.bg = new BoardGame(this.WIDTH, this.HEIGHT);
+				num++;
 			} else if (gm.clicked(e.getX(), e.getY()) == 2)
 				System.exit(1);
 			else if(gm.clicked(e.getX(), e.getY()) == 1) {
@@ -246,7 +261,9 @@ public class PlayGame extends JPanel implements Manager {
 			} else if (code == KeyEvent.VK_ENTER) {
 				if (gm.getSelector() == 0) {
 					gameState = playState;
+					gm.stopMusic();
 					bg = new BoardGame(this.WIDTH, this.HEIGHT);
+					num++;
 				} else if (gm.getSelector() == 2) {
 					System.exit(1);
 				}

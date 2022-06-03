@@ -611,7 +611,7 @@ public class BoardGame {
 								if (whiteTurn)
 									this.whitePlayer.hideSoldiersFastExcept(this.readyToDeploy);
 //							this.whiteTurn = false;
-								playSE(1);
+								playSE(2);
 //							this.phaseChange();
 //								if (!whiteTurn) {
 //									blackPlayer.deployRandomSoldier(board);
@@ -751,6 +751,7 @@ public class BoardGame {
 		for (int i = 0; i < this.board.length; i++) {
 			if (s == board[i]) {
 				board[i] = null;
+				playSE(4);
 				break;
 			}
 		}

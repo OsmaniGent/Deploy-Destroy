@@ -38,6 +38,7 @@ public class GameMenu extends JPanel implements Runnable {
 	private boolean hovered;
 	private BufferedImage img; 
 	public static final int FPS = 60;
+	Sound sound = new Sound();
 	
 	
 //	JFrame frame = new JFrame();
@@ -54,10 +55,10 @@ public class GameMenu extends JPanel implements Runnable {
   
 //  KeyHandler keyH = new KeyHandler();
   
-  Sound music = new Sound();
-  
-  Sound se = new Sound();
-  
+//  Sound music = new Sound();
+//  
+//  Sound se = new Sound();
+//  
 //  public CollisionChecker cChecker = new CollisionChecker(this);
 //  
 //  public AssetSetter aSetter = new AssetSetter(this);
@@ -78,7 +79,8 @@ public class GameMenu extends JPanel implements Runnable {
 	{
 	    //TODO: Handle exception.
 	}
-
+    
+    playMusic(3);
    
   }
   
@@ -257,7 +259,16 @@ public void drawInstruction(Graphics g) {
 		
 	  }
 	
-	public void function(int num) {
+	public void playMusic(int i) {
+		sound.setFile(i);
+		sound.play();
+		sound.loop();
+	}
+	public void stopMusic() {
+		sound.stop();
+	}
+
+	public void changeSelector(int num) {
 		
 		if(num == 1) {
 			selector = 0;
@@ -307,14 +318,14 @@ public void drawInstruction(Graphics g) {
 	public void hover(int x, int y) {
 //		
 				if(x >= blockWidth*(8) && x <= blockWidth*(8) + startWidth + 10 && y >= HEIGHT/2 - 30 && y <= HEIGHT/2 - 50 + startHeight) {
-					function(1);
+					changeSelector(1);
 					
 				}
 				else if(x >= blockWidth*(8) && x <= blockWidth*(8) + startWidth + 10 && y >= HEIGHT/2 + blockWidth - 30 && y <= HEIGHT/2 + blockWidth - 50 + startHeight) {
-					function(2);
+					changeSelector(2);
 				}
 				else if(x >= blockWidth*(8) && x <= blockWidth*(8) + startWidth + 10 && y >= HEIGHT/2 + blockWidth*2 - 30 && y <= HEIGHT/2 + blockWidth*2 - 50 + startHeight) {
-					function(3);
+					changeSelector(3);
 				}
 				else {
 					hovered = false;
