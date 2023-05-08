@@ -276,6 +276,9 @@ public class PlayGame extends JPanel implements Manager {
 				gameState = titleState;
 			}
 		}
+		if(e == 70){
+			bg.end();
+		}
 	}
 
 	@Override
